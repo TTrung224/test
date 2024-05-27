@@ -1,4 +1,4 @@
-# COSC2769_groupProject abc
+# COSC2769_groupProject
 
 ## Description
 A mock e-commerce website based on some requirements from the Lazada system. It uses MERN stack as the web development framework of choice, and includes use cases for guests, buyers, sellers, and admins:
