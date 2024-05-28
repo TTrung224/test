@@ -1,27 +1,35 @@
-require("dotenv").config();
-require("./config/Database").connect();
-const cors = require('cors')
-const express = require("express");
-const route = require('./routes/Index');
-const cookies = require('cookie-parser')
-const path = require('path')
-const config = process.env;
+import {} from 'dotenv/config'
+import createError from 'http-errors';
+import express, { json, urlencoded } from 'express';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors';
 
-const app = express();
-app.use(express.json());
-app.use(cookies(config.COOKIE_KEY));
-app.use(cors({origin: 'http://localhost:3000', credentials: true}))
+import indexRouter from './route/index.js';
+var app = express();
 
-// For getting images from server
-app.get("/image/:imgName", (req, res) => {
-    try {
-        res.sendFile(path.join(__dirname, `./productImgs/${req.params.imgName}`))
-    } catch (error) {
-        console.log(error)
-        res.sendFile(path.join(__dirname, `./productImgs/placeholder.png`))
-    }
-})
+app.use(logger('dev'));
+app.use(json());
+app.use(urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(cors({origin: process.env.ORIGIN, credentials: true}))
 
-route(app);
+app.use('/', indexRouter);
 
-module.exports = app;
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  let error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.send(error);
+});
+
+export default app;
