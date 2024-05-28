@@ -9,7 +9,7 @@ import indexRouter from './route/index.js';
 var app = express();
 
 app.use(logger('dev'));
-app.use(json());
+app.use(json()); 
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({origin: process.env.ORIGIN, credentials: true}))
