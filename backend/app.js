@@ -14,7 +14,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({origin: process.env.ORIGIN, credentials: true}))
 
-app.use('/', indexRouter);
+app.use('/', indexRouter); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
