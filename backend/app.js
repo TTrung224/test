@@ -8,7 +8,6 @@ import cors from 'cors';
 import indexRouter from './route/index.js';
 var app = express();
 
-
 app.use(logger('dev'));
 app.use(json()); 
 app.use(urlencoded({ extended: false }));
